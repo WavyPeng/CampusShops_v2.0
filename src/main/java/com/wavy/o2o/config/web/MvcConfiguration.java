@@ -1,6 +1,8 @@
 package com.wavy.o2o.config.web;
 
 import com.google.code.kaptcha.servlet.KaptchaServlet;
+import com.wavy.o2o.interceptor.shopadmin.ShopLoginInterceptor;
+import com.wavy.o2o.interceptor.shopadmin.ShopPermissionInterceptor;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
@@ -10,10 +12,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.ViewResolver;
-import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.config.annotation.*;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 import javax.servlet.ServletException;
@@ -87,6 +86,7 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter implements Applica
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry){
 //        registry.addResourceHandler("/resources/**").addResourceLocations("classpath:/resources/");
+        registry.addResourceHandler("/upload/**").addResourceLocations("file:E:/o2o/image/upload/");
     }
 
     /**
@@ -130,5 +130,33 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter implements Applica
         multipartResolver.setMaxInMemorySize(20971520);
 
         return multipartResolver;
+    }
+
+    /**
+     * 添加拦截器配置
+     * @param registry
+     */
+    @Override
+    public void addInterceptors(InterceptorRegistry registry){
+        String interceptPath = "/shopadmin/**";
+        // 注册拦截器
+        InterceptorRegistration loginIR = registry.addInterceptor(new ShopLoginInterceptor());
+        // 配置拦截器路径
+        loginIR.addPathPatterns(interceptPath);
+        // 注册其他拦截器
+        InterceptorRegistration permissionIR = registry.addInterceptor(new ShopPermissionInterceptor());
+        // 配置拦截器路径
+        permissionIR.addPathPatterns(interceptPath);
+        // 配置不拦截的路径
+        //<!-- shoplist page -->
+        permissionIR.excludePathPatterns("/shopadmin/shoplist");
+        permissionIR.excludePathPatterns("/shopadmin/getshoplist");
+        //<!-- shopregister page -->
+        permissionIR.excludePathPatterns("/shopadmin/getshopinitinfo");
+        permissionIR.excludePathPatterns("/shopadmin/registershop");
+        permissionIR.excludePathPatterns("/shopadmin/shopoperation");
+        //<!-- shopmanage page -->
+        permissionIR.excludePathPatterns("/shopadmin/shopmanagement");
+        permissionIR.excludePathPatterns("/shopadmin/getshopmanagementinfo");
     }
 }

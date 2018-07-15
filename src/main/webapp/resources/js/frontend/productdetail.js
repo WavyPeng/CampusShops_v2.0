@@ -12,7 +12,7 @@ $(function() {
             // 给商品信息相关HTML控件赋值
 
             // 商品缩略图
-            $('#product-img').attr('src', product.imgAddr);
+            $('#product-img').attr('src', getContextPath() + product.imgAddr);
             // 商品更新时间
             $('#product-time').text(
                 new Date(product.lastEditTime).Format("yyyy-MM-dd"));
@@ -44,7 +44,7 @@ $(function() {
             var imgListHtml = '';
             // 遍历商品详情图列表，并生成批量img标签
             product.productImgList.map(function(item, index) {
-                imgListHtml += '<div> <img src="' + item.imgAddr
+                imgListHtml += '<div> <img src="' + getContextPath() + item.imgAddr
                     + '" width="100%" /></div>';
             });
             $('#imgList').html(imgListHtml);

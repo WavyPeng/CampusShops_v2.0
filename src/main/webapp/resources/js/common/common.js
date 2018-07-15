@@ -41,3 +41,10 @@ function getQueryString(name) {
     }
     return '';
 }
+
+/**
+ * 获取项目的contextpath，修正图片路由让其正确显示
+ */
+function getContextPath(){
+    return "/o2o/";
+}
