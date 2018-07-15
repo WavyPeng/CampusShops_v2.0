@@ -11,6 +11,7 @@
         <result column="original_price" property="originalPrice" />
         <result column="discount_price" property="discountPrice" />
         <result column="priority" property="priority" />
+        <result column="point" property="point" />
         <result column="create_time" property="createTime" />
         <result column="last_edit_time" property="lastEditTime" />
         <result column="enable_status" property="enableStatus" />
@@ -45,6 +46,7 @@
         original_price,
         discount_price,
         priority,
+        point,
         create_time,
 		last_edit_time,
 		enable_status,
@@ -58,6 +60,7 @@
 		#{originalPrice},
 		#{discountPrice},
 		#{priority},
+		#{point},
 		#{createTime},
 		#{lastEditTime},
 		#{enableStatus},
@@ -74,6 +77,7 @@
 		original_price,
 		discount_price,
 		priority,
+        point,
 		create_time,
 		last_edit_time,
 		enable_status,
@@ -131,6 +135,7 @@
 		p.original_price,
 		p.discount_price,
 		p.priority,
+		p.point,
 		p.create_time,
 		p.last_edit_time,
 		p.enable_status,
@@ -164,6 +169,7 @@
             <if test="originalPrice != null">original_price=#{originalPrice},</if>
             <if test="discountPrice != null">discount_price=#{discountPrice},</if>
             <if test="priority != null">priority=#{priority},</if>
+            <if test="point != null">point=#{point},</if>
             <if test="lastEditTime != null">last_edit_time=#{lastEditTime},</if>
             <if test="enableStatus != null">enable_status=#{enableStatus},</if>
             <if test="productCategory != null

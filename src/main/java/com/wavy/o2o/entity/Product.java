@@ -22,6 +22,8 @@ public class Product {
     private String discountPrice;
     // 权重，越大越排前显示
     private Integer priority;
+    // 商品积分（新添）
+    private Integer point;
     // 创建时间
     private Date createTime;
     // 更新时间
@@ -90,6 +92,14 @@ public class Product {
 
     public void setPriority(Integer priority) {
         this.priority = priority;
+    }
+
+    public Integer getPoint() {
+        return point;
+    }
+
+    public void setPoint(Integer point) {
+        this.point = point;
     }
 
     public Date getCreateTime() {
