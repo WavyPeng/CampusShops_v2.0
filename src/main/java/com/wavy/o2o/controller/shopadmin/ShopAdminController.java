@@ -58,4 +58,14 @@ public class ShopAdminController {
         // 转发至授权信息修改页面
         return "shop/shopauthedit";
     }
+
+    @RequestMapping(value = "/operationsuccess",method = RequestMethod.GET)
+    private String operationSuccess(){
+        return "shop/operationsuccess";
+    }
+
+    @RequestMapping(value = "/operationfail",method = RequestMethod.GET)
+    private String operationFail(){
+        return "shop/operationfail";
+    }
 }
