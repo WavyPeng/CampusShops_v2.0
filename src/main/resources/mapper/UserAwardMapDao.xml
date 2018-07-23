@@ -21,8 +21,8 @@
             <result column="shop_name" property="shopName" />
         </association>
         <association property="operator" column="operator_id" javaType="com.wavy.o2o.entity.UserInfo">
-            <id column="user_id" property="userId" />
-            <result column="name" property="name" />
+            <id column="operator_id" property="userId" />
+            <result column="operator_name" property="name" />
         </association>
     </resultMap>
     <select id="queryUserAwardMapList" resultMap="userAwardResultMap">
@@ -38,7 +38,7 @@
         a.award_id,
         a.award_name,
         operator.user_id as operator_id,
-        operator.name
+        operator.name as operator_name
         FROM
         tb_user_award_map uam,
         tb_user_info buyer,
@@ -133,7 +133,7 @@
         a.award_id,
         a.award_name,
         operator.user_id as operator_id,
-        operator.name
+        operator.name as operator_name
         FROM
         tb_user_award_map uam,
         tb_user_info buyer,

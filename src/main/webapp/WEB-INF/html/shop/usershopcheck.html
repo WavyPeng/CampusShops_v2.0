@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>消费记录</title>
+    <title>用户列表</title>
     <meta name="viewport" content="initial-scale=1, maximum-scale=1">
     <link rel="shortcut icon" href="/favicon.ico">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -12,13 +12,13 @@
           href="//g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
     <link rel="stylesheet"
           href="//g.alicdn.com/msui/sm/0.6.2/css/sm-extend.min.css">
-    <link rel="stylesheet" href="../resources/css/shop/productbuycheck.css">
+    <link rel="stylesheet" href="../resources/css/shop/usershopcheck.css">
 </head>
 <body>
 <div class="page-group">
     <div class="page">
         <header class="bar bar-nav">
-            <h1 class="title">消费记录</h1>
+            <h1 class="title">用户列表</h1>
         </header>
         <div class="bar bar-header-secondary">
             <div class="searchbar">
@@ -32,15 +32,13 @@
         </div>
         <div class="content">
             <div class="content-block">
-                <div id = "chart" style="width: 100%; height: 300px;"></div>
-                <div class="row row-productbuycheck">
-                    <div class="col-10">名称</div>
-                    <div class="col-40">消费时间</div>
-                    <div class="col-20">用户</div>
-                    <div class="col-10">积分</div>
-                    <div class="col-20">店员</div>
+                <div class="row row-usershopcheck">
+                    <div class="col-50">用户</div>
+                    <div class="col-50">积分</div>
                 </div>
-                <div class="productbuycheck-wrap"></div>
+                <div class="usershopcheck-wrap">
+                    <!-- 动态内容在此呈现 -->
+                </div>
             </div>
             <div class="content-block">
                 <div class="row">
@@ -63,6 +61,6 @@
 <script type='text/javascript' src='../resources/js/common/echarts.min.js'
         charset='utf-8'></script>
 <script type='text/javascript'
-        src='../resources/js/shop/productbuycheck.js' charset='utf-8'></script>
+        src='../resources/js/shop/usershopcheck.js' charset='utf-8'></script>
 </body>
 </html>

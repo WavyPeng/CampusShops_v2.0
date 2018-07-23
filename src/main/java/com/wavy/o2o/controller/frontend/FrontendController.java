@@ -48,4 +48,22 @@ public class FrontendController {
     private String showProductDetail() {
         return "frontend/productdetail";
     }
+
+    /**
+     * 店铺的奖品列表页路由
+     * @return
+     */
+    @RequestMapping(value = "/awardlist", method = RequestMethod.GET)
+    private String showAwardList(){
+        return "frontend/awardlist";
+    }
+
+    /**
+     * 奖品兑换列表页路由
+     * @return
+     */
+    @RequestMapping(value = "/pointrecord", method = RequestMethod.GET)
+    private String showPointRecord(){
+        return "frontend/pointrecord";
+    }
 }
