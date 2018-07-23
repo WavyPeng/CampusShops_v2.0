@@ -4,6 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.wavy.o2o.dao.ProductSellDailyDao">
     <resultMap id="productSellDailyResultMap" type="com.wavy.o2o.entity.ProductSellDaily">
+        <id column="product_sell_daily_id" property="productSellDailyId" />
         <result column="create_time" property="createTime" />
         <result column="total" property="total" />
         <association property="product" column="product_id" javaType="com.wavy.o2o.entity.Product">
@@ -17,6 +18,7 @@
     </resultMap>
     <select id="queryProductSellDailyList" resultMap="productSellDailyResultMap">
         SELECT
+        psd.product_sell_daily_id,
         psd.create_time,
         psd.total,
         s.shop_id,
@@ -42,23 +44,37 @@
                 and p.product_name like '%${productSellDailyCondition.product.productName}%'
             </if>
             <if test="beginTime!=null and endTime!=null">
-                and psd.create_time between #{beginTime} and #{endTime};
+                and date_format(psd.create_time,'%Y-%m-%d')between
+                date_format(#{beginTime},'%Y-%m-%d') and
+                date_format(#{endTime},'%Y-%m-%d')
             </if>
             <if test="beginTime!=null and endTime==null">
-                and psd.create_time &gt;=#{beginTime};
+                and date_format(psd.create_time,'%Y-%m-%d')&gt;=
+                date_format(#{beginTime},'%Y-%m-%d')
             </if>
             <if test="beginTime==null and endTime!=null">
-                and psd.end_time &lt;=#{endTime};
+                and date_format(psd.create_time,'%Y-%m-%d')&lt;=
+                date_format(#{endTime},'%Y-%m-%d')
             </if>
         </where>
+        order by psd.product_id,psd.create_time
     </select>
     <insert id="insertProductSellDaily" parameterType="com.wavy.o2o.entity.ProductSellDaily">
         INSERT INTO
-        tb_product_sell_daily(
-        SELECT product_id,shop_id,create_time,count(product_id) as total
+        tb_product_sell_daily(product_id,shop_id,create_time,total)(
+        SELECT product_id,shop_id,date_format(psd.create_time,'%Y-%m-%d'),count(product_id) as total
         FROM tb_user_product_map
         WHERE date_format(create_time,'%Y-%m-%d')=date_sub(
         curdate(),INTERVAL 1 day) group by product_id
+        )
+    </insert>
+    <insert id="insertDefaultProductSellDaily">
+        INSERT into tb_product_sell_daily(product_id,shop_id,create_time,total)(
+        SELECT p.product_id,p.shop_id,date_sub(curdate(),INTERVAL 1 day),0 AS total
+        FROM tb_product p
+        WHERE
+        p.product_id not in(select product_id from tb_product_sell_daily where
+        date_format(create_time,'%Y-%m-%d')=date_sub(curdate(),INTERVAL 1 day))
         )
     </insert>
 </mapper>

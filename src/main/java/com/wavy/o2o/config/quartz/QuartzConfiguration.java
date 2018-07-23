@@ -33,6 +33,9 @@ public class QuartzConfiguration {
         // 设置jobDetail的名字
         jobDetailFactoryBean.setName("product_sell_daily_job");
         // 设置jobDetail的组名
+        jobDetailFactoryBean.setGroup("job_product_sell_daily_group");
+        // 对于相同的JobDetail，当指定多个trigger时，很可能第一个job完成之前，第二个job就开始了
+        // 设置concurrent为false，多个job不会并发运行，第二个job将不会在第一个job完成之前开始
         jobDetailFactoryBean.setConcurrent(false);
         // 指定运行任务的类
         jobDetailFactoryBean.setTargetObject(productSellDailyService);
@@ -56,7 +59,7 @@ public class QuartzConfiguration {
         // 绑定jobDaily
         triggerFactory.setJobDetail(jobDetailFactory.getObject());
         // 设定cron表达式
-        triggerFactory.setCronExpression("0/3****?*");
+        triggerFactory.setCronExpression("0 0 0 * * ? *");
         return triggerFactory;
     }
 
